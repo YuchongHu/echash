@@ -1,10 +1,12 @@
-#Welcome#
+Welcome
+=====
 
 This is the source code for ECHash described in our paper presented in ACM SoCC'19. 
 ECHash is tested on Ubuntu 14.04 and Red Hat Release 6.5 with GCC (version 4.8.4 - 4.9.2), and we take the Debian and Ubuntu environment as an example.
 
 
-#Preparation#
+Preparation
+====
  
 These are the required libraries that users need to download separately.
 Users can use apt-get to install the required libraries.
@@ -29,9 +31,10 @@ Users can use compile and run "*ec*" to confirm that ISA-l is successfully insta
 	$./ec 1 2
 
 
-#ECHash Installation#
+ECHash Installation
+====
 
-###Memcached Servers###
+**Memcached Servers**
 
 Users can use apt-get to install Memcached servers, or by the source code of Memcached from *http://memcached.org*.
 
@@ -40,15 +43,15 @@ Users can use apt-get to install Memcached servers, or by the source code of Mem
 -	For standalone setup, users can start and configure the initialization parameters (e.g. `-d -m`) of Memcached servers by `$ sh cls.sh` manually. Also users can configure **Init/Scale/Repair** Memcached IP/Ports in "*config.txt*" for testing.
 -	For distributed setup, users can configure distinguished IP/Ports in each node.
 
-
-###ECHash Proxy###
+**ECHash Proxy**
 
 	$ cd libmemcached-1.0.18
 	$ sh configure; make; sudo make install
 	$ export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH  #(if it ocuurs library path issue)
 
 
-#Workloads#
+Workloads
+====
 
 Users can use YCSB to generate workloads after executing "*ycsb_gen.sh*" and "*gen_workloads*".
 For simplicity, users can also use the providing "*ycsb_set.txt*" and "*ycsb_test.txt*" as workloads (8MB for READ ONLY) to run ECHash and skip this workloads section.
@@ -106,7 +109,8 @@ Configure `YCSB_HOME=` (path to YCSB-master) in "*ycsb_gen.sh*" firstly and then
 	$ ./gen_workloads
 
 
-#Benchmarks#
+Benchmarks
+====
 
 -	Users can run *Basic I/O* with multiple threads (`#define NTHREADS 16` in "*io.cpp*"), but other benchmarks with single thread currently (`#define NTHREADS 1` in "*scale.cpp*" and "*repair.cpp*").
 -	Function Prototype: `void MRmemcached_init_addserver(ECHash pointer, Memcached server IP, Port, Ring ID);` 
