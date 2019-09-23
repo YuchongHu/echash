@@ -13,14 +13,6 @@
 # permissions and limitations under the License. See accompanying                                                                                                                 
 # LICENSE file.                                                                                                                                                                   
 
-# Yahoo! Cloud System Benchmark
-# Workload B: Read mostly workload
-#   Application example: photo tagging; add a tag is an update, but most operations are to read tags
-#                        
-#   Read/update ratio: 95/5
-#   Default data size: 1 KB records (10 fields, 100 bytes each, plus key)
-#   Request distribution: zipfian
-
 # The number of fields in a record
 fieldcount=1
 
@@ -42,7 +34,7 @@ readproportion=1.0
 updateproportion=0.0
 
 # What proportion of operations are inserts
-insertproportion=0.0
+insertproportion=0
 
 # What proportion of operations read then modify a record
 readmodifywriteproportion=0
@@ -64,4 +56,7 @@ readallfields=true
 fieldlengthdistribution=constant
 #fieldlengthdistribution=uniform
 #fieldlengthdistribution=zipfian
+
+# The distribution of requests across the keyspace
+requestdistribution=zipfian
 

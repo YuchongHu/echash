@@ -116,22 +116,25 @@ Benchmarks
 -	Function Prototype: `void MRmemcached_init_addserver(ECHash pointer, Memcached server IP, Port, Ring ID);` 
 -	Users can change the directory of workloads ("*ycsb_set.txt*" and "*ycsb_test.txt*") in "*para.txt*" by configuring `Workloads Path=` (path to workloads).
 -	Users can configure (N,K) coding in "*libmemcached-1.0.18/libmemcached-1.0/struct/ring.h*" (e.g. (5,3) coding as default) and keep N=RING_SIZE, where N = the number of data and parity chunks, K = numbers of data chunks. Besides, users should make sure that the number of rings of the number memcached servers initialized in "*cls.sh*" is consistent with the RING_SIZE of "*ring.h*".
--	Users can accelerate testing process by redirecting progress tracking printings to a temporary file, e.g., by "> tmp.txt".  
+-	Users can accelerate testing process by redirecting progress tracking printings to a temporary file, e.g., by "> tmp.txt".
+-	Users can reset Memcached servers by `sh cls.sh` before each testing.
+
+
+Compile all source files.
+
+	$ make
 
 1.**Basic I/O Performance** 
 
-    $ gcc -std=c++11 io.cpp -o io -lmemcached -lpthread
     $ ./io > tmp.txt
 
 2.**Scale-out/Scale-in Performance**, users should make sure that scale-in memcached servers are already in this hash ring.
 ./scale [out|in] S, S indicates the number of scale out/in nodes.
 
-    $ gcc -std=c++11 scale.cpp -o scale -lmemcached -lpthread
 	$ ./scale out S > tmp.txt # or ./scale in S > tmp.txt
 
 3.**Degraded Read Performance During Scaling**, users can install mysqlclient for C++ firstly, create MySQL database and tables, and put the workloads into MySQL before running ECHash.
 
 4.**Node Repair Performance**, users should make sure that the repaired memcached servers are already in this hash ring. Note that we only simulate the repair process including degraded reads and objects migration.
 
-	$ gcc -std=c++11 repair.cpp -o repair -lmemcached -lpthread
 	$ ./repair > tmp.txt
