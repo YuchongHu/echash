@@ -75,7 +75,7 @@ struct kv_set_waitting_st
 struct memcached_ring_st
 {
     memcached_st *ring;
-    struct hash_node *hash_table[HASH_MAX_SIZE];
+    struct hash_node *hash_table[HASH_MAX_SIZE]; //Object Index
     struct kv_set_waitting_st *kv_set_waitting_list;
     uint32_t value_size;
     uint32_t waitting_length;
@@ -96,10 +96,11 @@ struct chunk_st
     uint32_t stripe_id;
     uint32_t used_size;
     uint32_t KV_num;
-    struct key_st *key_list;
+    struct key_st *key_list; //Object Index Reference List (OIRList)
 
 };
 
+//Stripe Metadata
 struct chunk_info_st
 {
     uint32_t ring_id;
@@ -124,11 +125,12 @@ struct encode_st
 struct ECHash_st
 {
     uint32_t total_num_server;
-    struct memcached_ring_st rings[RING_SIZE];
+    struct memcached_ring_st rings[RING_SIZE]; //Hash Ring
     uint32_t chunk_list_size;
-    struct chunk_st *chunk_list;
+    struct chunk_st *chunk_list; //Chunk Index
+
     uint32_t stripe_list_size;
-    struct chunk_info_st (*stripe_list)[RING_SIZE];
+    struct chunk_info_st (*stripe_list)[RING_SIZE]; //Stripe Index
 
     struct encode_st encode;
     struct balance_st *balance_arr;
