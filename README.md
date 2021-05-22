@@ -1,13 +1,12 @@
-Welcome
-=====
+# ECHash
 
 This is the source code for ECHash described in our paper presented in ACM SoCC'19. 
 ECHash is tested on Ubuntu 14.04 and Red Hat Release 6.5 with GCC (version 4.8.4 - 4.9.2), and we take the Debian and Ubuntu environment as an example.
 
 
 Preparation
-====
- 
+----
+
 These are the required libraries that users need to download separately.
 Users can use apt-get to install the required libraries.
 
@@ -30,11 +29,9 @@ Users can use compile and run "*ec*" to confirm that ISA-l is successfully insta
 	$ gcc ec.cpp -o ec -lisal
 	$./ec 1 2
 
+## ECHash Installation
 
-ECHash Installation
-====
-
-**Memcached Servers**
+### **Memcached Servers**
 
 Users can use apt-get to install Memcached servers, or by the source code of Memcached from *http://memcached.org*.
 
@@ -43,7 +40,7 @@ Users can use apt-get to install Memcached servers, or by the source code of Mem
 -	For standalone setup, users can start and configure the initialization parameters (e.g. `-d -m`) of Memcached servers by `$ sh cls.sh` manually. Also users can configure **Init/Scale/Repair** Memcached IP/Ports in "*config.txt*" for testing.
 -	For distributed setup, users can configure distinguished IP/Ports in each node.
 
-**ECHash Proxy**
+### **ECHash Proxy**
 
 	$ cd libmemcached-1.0.18
 	$ sh configure; make; sudo make install
@@ -51,7 +48,7 @@ Users can use apt-get to install Memcached servers, or by the source code of Mem
 
 
 Workloads
-====
+----
 
 Users can use YCSB to generate workloads after executing "*ycsb_gen.sh*" and "*gen_workloads*".
 For simplicity, users can also use the providing "*ycsb_set.txt*" and "*ycsb_test.txt*" as workloads (8MB for READ ONLY) to run ECHash and skip this workloads section.
@@ -73,19 +70,19 @@ For simplicity, users can also use the providing "*ycsb_set.txt*" and "*ycsb_tes
     $ sudo cp jdk-8u151-linux-x64.tar.gz /usr/local/java
     $ cd /usr/local/java
     $ sudo tar zxvf jdk-8u151-linux-x64.tar.gz
-	$ sudo vim ~/.bashrc
-		#Add the following to .bashrc
-			export JAVA_HOME=/usr/local/java/jdk1.8.0_151 
+    $ sudo vim ~/.bashrc
+    	#Add the following to .bashrc
+    		export JAVA_HOME=/usr/local/java/jdk1.8.0_151 
     		export JRE_HOME=${JAVA_HOME}/jre  
     		export CLASSPATH=.:${JAVA_HOME}/lib:${JRE_HOME}/lib  
     		export PATH=${JAVA_HOME}/bin:$PATH
-	$ source ~/.bashrc
+    $ source ~/.bashrc
 
 3.Install *YCSB* (https://github.com/brianfrankcooper/YCSB.git), and build the Memcached binding.
 
 	$ unzip YCSB-master.zip
 	$ cd YCSB-master
-    $ mvn -pl com.yahoo.ycsb:memcached-binding -am clean package
+	$ mvn -pl com.yahoo.ycsb:memcached-binding -am clean package
 
 4.Use the **basic** parameter in "*workloads_test*" to generate the raw workloads.
 
@@ -103,14 +100,14 @@ Configure `YCSB_HOME=` (path to YCSB-master) in "*ycsb_gen.sh*" firstly and then
 
 
 5.Pre-treatment workloads, execute "*gen_workloads*" to generate "*ycsb_set.txt*" and "*ycsb_test.txt*". The value length of objects can be configured in "*gen_workloads.cpp*" (`#define LENGTH 256`), and the key size of objects is configured around 20B. 
- 
+
 	copy "ycsb_load.load" and "ycsb_run.run" from YCSB-master to the directory of "gen_workloads.cpp"
 	$ gcc gen_workloads.cpp -o gen_workloads
 	$ ./gen_workloads
 
 
 Benchmarks
-====
+----
 
 -	Users can run *Basic I/O* with multiple threads (`#define NTHREADS 16` in "*io.cpp*"), but other benchmarks with single thread currently (`#define NTHREADS 1` in "*scale.cpp*" and "*repair.cpp*").
 -	Function Prototype: `void MRmemcached_init_addserver(ECHash pointer, Memcached server IP, Port, Ring ID);` 
@@ -138,3 +135,24 @@ Compile all source files.
 4.**Node Repair Performance**, users should make sure that the repaired memcached servers are already in this hash ring. Note that we only simulate the repair process including degraded reads and objects migration.
 
 	$ ./repair > tmp.txt
+
+## Publication
+
+Liangfeng Cheng, Yuchong Hu, and Patrick P. C. Lee.
+**"Coupling Decentralized Key-Value Stores with Erasure Coding."**
+Proceedings of the ACM Symposium on Cloud Computing 2019 (SoCC 2019), Santa Cruz, CA, USA, November 2019.
+(AR: 39/157 = 24.8%)
+
+## Contact
+
+Please email to Yuchong Hu ([yuchonghu@hust.edu.cn](mailto:yuchonghu@hust.edu.cn)) if you have any questions.
+
+## Our other works
+
+Welcome to follow our other works!
+
+1. FAST 2021: https://github.com/YuchongHu/ecwide
+2. ICDCS 2021: https://github.com/YuchongHu/stripe-merge
+3. SoCC 2019: https://github.com/YuchongHu/echash
+4. INFOCOM 2018: https://github.com/YuchongHu/ncscale
+5. TOS: https://github.com/YuchongHu/doubler
